@@ -22,7 +22,7 @@ export const updateUserEvent = (eventId,action) =>{
             }
         })
         allEvents = allEvents.filter(item => item !== temp)
-        registeredEvents.push(temp);
+        registeredEvents = [...registeredEvents, temp];
     } else {
         registeredEvents.map((eventData) => {
             if (eventData.id == eventId) {
@@ -30,7 +30,7 @@ export const updateUserEvent = (eventId,action) =>{
             }
         })
         registeredEvents = registeredEvents.filter(item => item !== temp)
-        allEvents.push(temp);
+        allEvents = [...allEvents, temp];
     }
     return registeredEvents;
 }

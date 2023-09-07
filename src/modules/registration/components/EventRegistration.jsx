@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import EventsList from "./EventsList";
 import { getAllEvents, getUserEvents } from "../api/RegistrationApi";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchEvents } from "../../../store/eventSlice";
+import { fetchEvents, fetchUserEvents } from "../../../store/eventSlice";
+import { removeObjects } from "../../../utils/array";
 
 
 function EventRegistration() {
@@ -14,14 +15,16 @@ function EventRegistration() {
 
     useEffect(() => {
         const ae = getAllEvents();
+        const re = getUserEvents();
         dispatch(fetchEvents(ae));
+        dispatch(fetchUserEvents(re));
     }, [])
     
     return(
         <>
             {isUserLoggedIn && 
             <div className="EventRegisteration">
-                <EventsList eventsTitle='All Events' listOfEvents = {allEvents}/>
+                <EventsList eventsTitle='All Events' listOfEvents = {removeObjects(allEvents, registeredEvents)}/>
                 <EventsList eventsTitle='Registered Events' listOfEvents = {registeredEvents}/>
             </div>}
 

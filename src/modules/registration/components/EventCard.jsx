@@ -46,8 +46,10 @@ function EventCard(props) {
 
     const buttonClickListener = () => {
         if (buttonText == "Select") {
+            updateUserEvent(id, 'register')
             dispatch(registerEvent(props));
         } else {
+            updateUserEvent(id, 'unregister')
             dispatch(unRegisterEvent(props));
         }
     }

@@ -14,6 +14,9 @@ const eventSlice = createSlice({
         fetchEvents: (state, action) => {
             state.allEvents = action.payload;
         },
+        fetchUserEvents: (state, action) => {
+            state.userEvents = action.payload;
+        },
         registerEvent: (state, action) => {
             state.allEvents = removeId(state.allEvents, action.payload.id);
             state.userEvents = [...state.userEvents,action.payload];
@@ -30,5 +33,5 @@ const eventSlice = createSlice({
     }
 })
 
-export const {fetchEvents, registerEvent, unRegisterEvent} = eventSlice.actions;
+export const {fetchEvents, fetchUserEvents, registerEvent, unRegisterEvent} = eventSlice.actions;
 export default eventSlice.reducer;
