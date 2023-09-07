@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import EventsList from "./EventsList";
 import { getAllEvents, getUserEvents } from "../api/RegistrationApi";
 import { useSelector, useDispatch } from "react-redux";
+import { fetchEvents } from "../../../store/eventSlice";
 
 
 function EventRegistration() {
 
-    const allEvents = useSelector(state => state.allEvents);
-    const registeredEvents = useSelector(state => state.userEvents);
-    const isUserLoggedIn = useSelector(state => state.isUserLoggedIn);
+    const allEvents = useSelector(state => state.event.allEvents);
+    const registeredEvents = useSelector(state => state.event.userEvents);
+    const isUserLoggedIn = useSelector(state => state.login.isUserLoggedIn);
     const dispatch = useDispatch();
 
     useEffect(() => {
         const ae = getAllEvents();
-        dispatch({type: 'FETCH_EVENTS', payload: ae});
+        dispatch(fetchEvents(ae));
     }, [])
     
     return(

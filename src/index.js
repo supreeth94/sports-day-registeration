@@ -5,7 +5,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store/store';
+import eventReducer from './store/eventSlice';
+import loginReducer from './store/loginSlice';
+import { applyMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+
+// const rootReducer = combineReducers({
+//   er: eventReducer,
+//   lr: loginReducer
+// });
+
+// const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const store = configureStore({
+  reducer: {
+    event : eventReducer,
+    login: loginReducer
+  }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

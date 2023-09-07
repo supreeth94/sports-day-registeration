@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { validateUser } from "../../../store/actions";
 
 const Login= (props) => {
 
@@ -23,7 +24,7 @@ const Login= (props) => {
         e.preventDefault();
         if(props.type == "Login") {
             navigate("/register");
-            dispatch({type: 'USER_LOGGED_IN'});
+            dispatch(validateUser(personalInfo));
         } else {
             navigate("/login");
         }

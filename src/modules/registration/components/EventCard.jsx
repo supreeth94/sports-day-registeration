@@ -3,13 +3,14 @@ import { updateUserEvent } from "../api/RegistrationApi";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { isTimeInBetween } from "../../../utils/time";
+import { registerEvent, unRegisterEvent } from "../../../store/eventSlice";
 
 function EventCard(props) {
     const {id, event_name, event_category, start_time, end_time} = props;
     const [buttonText, setButtonText] = useState("Select");
-    const allEvents = useSelector(state => state.allEvents);
-    const registeredEvents = useSelector(state => state.userEvents);
-    const userBusyTime = useSelector(state => state.userBusyTime);
+    const allEvents = useSelector(state => state.event.allEvents);
+    const registeredEvents = useSelector(state => state.event.userEvents);
+    const userBusyTime = useSelector(state => state.event.userBusyTime);
     const [isDisabled, setIsdisabled] = useState(false);
     const dispatch = useDispatch();
 
@@ -45,9 +46,9 @@ function EventCard(props) {
 
     const buttonClickListener = () => {
         if (buttonText == "Select") {
-            dispatch({type: 'REGISTER_EVENT', payload: props});
+            dispatch(registerEvent(props));
         } else {
-            dispatch({type: 'UN_REGISTER_EVENT', payload: props});
+            dispatch(unRegisterEvent(props));
         }
     }
 
