@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+.EventRegisteration {
+  width: auto;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.AllEventsList {
+  float: left;
+  width: 600px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  height: 750px;
+  display: flex;
+  flex-direction: row;
+  justify-self: start;
+  flex-wrap: wrap;
+  overflow: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar{
+    width: 0px;
+    background: #ff0000;
+  }
+}
+
+.EventCard {
+  width: 270px;
+  height: 180px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius:5px;
+}
