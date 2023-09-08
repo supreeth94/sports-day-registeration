@@ -34,10 +34,10 @@ const Login= (props) => {
         <div>
             <h1>{props.type} Page</h1>
             <form onSubmit={handleSubmit}>
-                <input name="firstName" type="text" placeholder="First Name" onChange={changeHandler}/>
+            {(props.type == "Sign Up") && <input name="firstName" type="text" placeholder="First Name" onChange={changeHandler}/>}
                 <br/>
                 <br/>
-                <input name="LastName" type="text" placeholder="Last Name" onChange={changeHandler}/>
+            {(props.type == "Sign Up") && <input name="LastName" type="text" placeholder="Last Name" onChange={changeHandler}/>}
                 <br/>
                 <br/>
                 <input name="email" type="text" placeholder="Email Address" onChange={changeHandler}/>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { updateUserEvent } from "../api/RegistrationApi";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { isTimeInBetween } from "../../../utils/time";
+import { isTimeInBetween, isSameTime } from "../../../utils/time";
 import { registerEvent, unRegisterEvent } from "../../../store/eventSlice";
 
 function EventCard(props) {
@@ -19,13 +19,13 @@ function EventCard(props) {
             if(registeredEvents.length >= 3) {
                 return true;
             } else {
-                userBusyTime.map((obj) => {
-                    if (isTimeInBetween(sTime, obj) || isTimeInBetween(eTime, obj)) {
+                let isUserBusy = userBusyTime.map((obj) => {
+                    if (isTimeInBetween(sTime, obj) || isTimeInBetween(eTime, obj) || isSameTime(sTime, eTime, obj)) {
                         console.log("The given time is within the specified range.   " +id);
                         return true;
                     }
-                })
-                return false;
+                }).some(val => val)
+                return isUserBusy;
             }
         } else {
             return false;
