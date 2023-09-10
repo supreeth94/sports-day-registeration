@@ -1,10 +1,10 @@
 const express = require("express");
-const { addEvent, getAllEvents } = require("../controller/eventController");
+const { getAllEvents } = require("../controller/eventController");
 
 
 const eventRouter = express.Router();
 
-eventRouter.post("/add", addEvent);
+// API route to fetch all the events
 eventRouter.get("/", getAllEvents);
 
 module.exports = eventRouter;

@@ -1,38 +1,45 @@
 import React, { useEffect, useState } from "react";
 import EventsList from "./EventsList";
-import { getAllEvents, getUserEvents } from "../api/RegistrationApi";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchEvents, fetchUserEvents } from "../../../store/eventSlice";
-import { removeObjects } from "../../../utils/array";
+import { fetchAllEvent, fetchUserEvents} from "../../../redux/events/eventActions";
 
 
 function EventRegistration() {
 
-    const allEvents = useSelector(state => state.event.allEvents);
     const registeredEvents = useSelector(state => state.event.userEvents);
-    const isUserLoggedIn = useSelector(state => state.login.isUserLoggedIn);
+    const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn);
+    const availableEvents = useSelector(state => state.event.availableEvents);
+    const personalInfo = useSelector(state => state.user.personalInfo);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        const ae = getAllEvents();
-        const re = getUserEvents();
-        dispatch(fetchEvents(ae));
-        dispatch(fetchUserEvents(re));
+        if (isUserLoggedIn) {
+            dispatch(fetchAllEvent());
+            dispatch(fetchUserEvents(personalInfo.user_id));
+        }
     }, [])
+
+    const handleLoginClick = () => {
+        navigate("/login");
+    }
     
     return(
         <>
             {isUserLoggedIn && 
             <div className="EventRegisteration">
-                <EventsList eventsTitle='All Events' listOfEvents = {removeObjects(allEvents, registeredEvents)}/>
+                <EventsList eventsTitle='All Events' listOfEvents = {availableEvents}/>
                 <EventsList eventsTitle='Registered Events' listOfEvents = {registeredEvents}/>
             </div>}
 
             {(!isUserLoggedIn) && 
             <div>
                 <h1>Please Log in to register</h1>
+                <button onClick={handleLoginClick}>Login</button>
             </div>}
         </>
     )
 }
-export default EventRegistration;
+export default EventRegistration = React.memo(EventRegistration);

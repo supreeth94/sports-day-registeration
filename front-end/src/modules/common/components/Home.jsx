@@ -16,6 +16,7 @@ function Home() {
     return(
         <div className="Home">
             <h1>Home</h1>
+            <hr/>
             <h2>Welcome to Sports Day Registeration!</h2>
             <button onClick={handleLoginClick}>Login</button>
             <button onClick={handleRegisterClick}>Sign Up</button>

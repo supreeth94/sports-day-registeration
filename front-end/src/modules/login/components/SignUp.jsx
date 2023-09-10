@@ -16,14 +16,14 @@ const Login= (props) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userLoginFailedState = useSelector(state => state.user.userLoginFailed);
-    const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn);
+    const userSignupFailedState = useSelector(state => state.user.userSignupFailed);
+    const isUsersignedUp = useSelector(state => state.user.userSignupSuccess);
 
     useEffect(() => {
-        if(isUserLoggedIn) {
-            navigate("/register");
+        if(isUsersignedUp) {
+            navigate("/login");
         }
-    },[isUserLoggedIn]);
+    },[isUsersignedUp]);
 
     const changeHandler = (e) => {
         setPersonalInfo((prevState) => {
@@ -33,31 +33,36 @@ const Login= (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(validateUser(personalInfo));
+        dispatch(signUpUser(personalInfo));
     }
 
-    const handleRegisterClick = () => {
-        navigate("/signup");
+    const handleLoginClick = () => {
+        navigate("/login");
     }
 
     return(
         <div>
-            <h1>Login Page</h1>
+            <h1>Sign Up Page</h1>
             <hr/>
+            <br/>
             <form onSubmit={handleSubmit}>
+                <input name="firstName" type="text" placeholder="First Name" onChange={changeHandler}/>
+                <br/>
+                <br/>
+                <input name="lastName" type="text" placeholder="Last Name" onChange={changeHandler}/>
+                <br/>
                 <br/>
                 <input name="email" type="text" placeholder="Email Address" onChange={changeHandler}/>
                 <br/>
                 <br/>
-            { (!userLoginFailedState) 
+            { !userSignupFailedState
                 &&  <input type="submit" value={props.type}/>}
             </form>
 
-            { userLoginFailedState && <div>
-                <p>User does not exist, please sign up</p>
-                <button onClick={handleRegisterClick}>Sign Up</button>
-                </div>
-                }
+            { userSignupFailedState && <div>
+            <p>User already exists, please login instead</p>
+            <button onClick={handleLoginClick}>Login</button>
+            </div>}
         </div>
     );
 }

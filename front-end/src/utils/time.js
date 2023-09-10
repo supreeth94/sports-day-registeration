@@ -6,9 +6,5 @@ export const isTimeInBetween = (t, obj) => {
 }
 
 export const isSameTime = (t1, t2, obj) => {
-    let time1 = new Date(t1);
-    let time2 = new Date(t2);
-    let startTime = new Date(obj.start_time);
-    let endTime = new Date(obj.end_time);
-    return (time1 == startTime && time2 == endTime);
+    return (t1 == obj.start_time && t2 == obj.end_time);
 }

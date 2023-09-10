@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { updateUserEvent } from "../api/RegistrationApi";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { isTimeInBetween, isSameTime } from "../../../utils/time";
-import { registerEvent, unRegisterEvent } from "../../../store/eventSlice";
+import { registerEvent, unRegisterEvent } from "../../../redux/events/eventActions";
 
 function EventCard(props) {
-    const {id, event_name, event_category, start_time, end_time} = props;
+    const {event_id, event_name, event_category, start_time, end_time} = props;
     const [buttonText, setButtonText] = useState("Select");
-    const allEvents = useSelector(state => state.event.allEvents);
     const registeredEvents = useSelector(state => state.event.userEvents);
+    const availableEvents = useSelector(state => state.event.availableEvents);
     const userBusyTime = useSelector(state => state.event.userBusyTime);
+    const personalInfo = useSelector(state => state.user.personalInfo);
+
     const [isDisabled, setIsdisabled] = useState(false);
     const dispatch = useDispatch();
 
-    const isBusyTime = (sTime, eTime, id) => {
-        if (allEvents.some(e => e.id === id)) {
+    const isBusyTime = (sTime, eTime, event_id) => {
+        if (availableEvents.some(e => e.event_id === event_id)) {
             if(registeredEvents.length >= 3) {
                 return true;
             } else {
                 let isUserBusy = userBusyTime.map((obj) => {
                     if (isTimeInBetween(sTime, obj) || isTimeInBetween(eTime, obj) || isSameTime(sTime, eTime, obj)) {
-                        console.log("The given time is within the specified range.   " +id);
+                        console.log("The given time is within the specified range.   " +event_id);
                         return true;
                     }
                 }).some(val => val)
@@ -33,7 +34,7 @@ function EventCard(props) {
     }
 
     useEffect(() => {
-        if (allEvents.some(e => e.id === id)) {
+        if (availableEvents.some(e => e.event_id === event_id)) {
             setButtonText("Select");
         } else {
             setButtonText("Remove");
@@ -41,16 +42,14 @@ function EventCard(props) {
     }, []);
 
     useEffect(() => {
-        setIsdisabled(isBusyTime(start_time, end_time, id));
+        setIsdisabled(isBusyTime(start_time, end_time, event_id));
     }, [registeredEvents])
 
     const buttonClickListener = () => {
         if (buttonText == "Select") {
-            updateUserEvent(id, 'register')
-            dispatch(registerEvent(props));
+            dispatch(registerEvent(personalInfo.user_id, props));
         } else {
-            updateUserEvent(id, 'unregister')
-            dispatch(unRegisterEvent(props));
+            dispatch(unRegisterEvent(personalInfo.user_id, props));
         }
     }
 

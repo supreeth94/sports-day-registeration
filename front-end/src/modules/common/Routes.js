@@ -1,5 +1,6 @@
 import Home from './components/Home';
 import Login from '../login/components/Login';
+import SignUp from '../login/components/SignUp';
 import EventRegistration from '../registration/components/EventRegistration';
 import ErrorPage from './components/ErrorPage';
 
@@ -17,7 +18,7 @@ export const routesElements = [
         },
         {
           path: '/signup',
-          element: <Login type="Sign Up"/>
+          element: <SignUp type="Sign Up"/>
         },
         {
           path: '/register',

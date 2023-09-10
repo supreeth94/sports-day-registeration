@@ -12,13 +12,12 @@ function EventsList(props) {
             
             return (
                 <EventCard 
-                    key = {eventData.id.toString()}
-                    id = {eventData.id}
+                    key = {eventData.event_id.toString()}
+                    event_id = {eventData.event_id}
                     event_name={eventData.event_name} 
                     event_category={eventData.event_category} 
                     start_time={eventData.start_time} 
                     end_time={eventData.end_time}
-                    // disabled={isBusyTime(eventData.start_time, eventData.end_time, eventData.id)}
                     />
             )
         })
