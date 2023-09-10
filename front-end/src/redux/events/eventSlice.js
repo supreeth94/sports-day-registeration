@@ -1,4 +1,4 @@
-import { removeObjectsById, removeElement, fetchObjectById } from "../../utils/array";
+import { removeObjectsById, removeElement, fetchObjectsById } from "../../utils/array";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -27,7 +27,7 @@ const eventSlice = createSlice({
         //This action is to be dispatched when all the user registered events are fetched
         fetchedUserEvents: (state, action) => {
             state.userEventIds = action.payload;
-            state.userEvents = fetchObjectById(state.allEvents, action.payload)
+            state.userEvents = fetchObjectsById(state.allEvents, action.payload)
             //Events available for registeration are allEvents - user registered events
             state.availableEvents = removeObjectsById(state.allEvents, action.payload);
             //Update the user busy time list with the time slot of the registered event
@@ -43,7 +43,7 @@ const eventSlice = createSlice({
         registeredEvent: (state, action) => {
             //Update the user registered events list with registered event id
             state.userEventIds = [...state.userEventIds, action.payload.event_id];
-            state.userEvents = fetchObjectById(state.allEvents, state.userEventIds)
+            state.userEvents = fetchObjectsById(state.allEvents, state.userEventIds)
             //Update the available events list by removing the registered event from it
             state.availableEvents = removeObjectsById(state.allEvents, state.userEventIds);
             //Update the user busy time list with the time slot of the registered event
@@ -57,7 +57,7 @@ const eventSlice = createSlice({
             state.availableEvents = [...state.availableEvents, action.payload];
             //Update the user registered events list by removing the unregistered event id
             state.userEventIds = removeElement(state.userEventIds, action.payload.event_id);
-            state.userEvents = fetchObjectById(state.allEvents, state.userEventIds)
+            state.userEvents = fetchObjectsById(state.allEvents, state.userEventIds)
             //Update the user busy time list with by removing the time slot of the unregistered event
             state.userBusyTime = removeObjectsById(state.userBusyTime, [action.payload.event_id]);
         }

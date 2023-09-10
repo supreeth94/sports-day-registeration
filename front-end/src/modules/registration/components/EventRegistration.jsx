@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import EventsList from "./EventsList";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllEvent, fetchUserEvents} from "../../../redux/events/eventActions";
+import { fetchAllEvents, fetchUserEvents} from "../../../redux/events/eventActions";
 
 
 function EventRegistration() {
@@ -17,7 +17,7 @@ function EventRegistration() {
 
     useEffect(() => {
         if (isUserLoggedIn) {
-            dispatch(fetchAllEvent());
+            dispatch(fetchAllEvents());
             dispatch(fetchUserEvents(personalInfo.user_id));
         }
     }, [])

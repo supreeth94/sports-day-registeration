@@ -1,7 +1,7 @@
 import axios, { Axios } from "axios";
 import { fetchedEvents, registeredEvent, unRegisteredEvent, fetchedUserEvents } from "./eventSlice";
 
-export const fetchAllEvent = () => {
+export const fetchAllEvents = () => {
     return dispatch => {
         axios.get('/events')
         .then(res => {
@@ -32,7 +32,6 @@ export const fetchUserEvents = (userId) => {
 
 export const registerEvent = (userId, props) => {
     return dispatch => {
-        console.log("$$$$$$$$ " + userId);
         axios.post(`/users/${userId}/register`, {
             event_id : props.event_id
         })
@@ -49,7 +48,6 @@ export const registerEvent = (userId, props) => {
 
 export const unRegisterEvent = (userId, props) => {
     return dispatch => {
-        console.log("$$$$$$$$ " + userId);
         axios.post(`/users/${userId}/unregister`, {
             event_id : props.event_id
         })
